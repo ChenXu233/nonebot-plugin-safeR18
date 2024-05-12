@@ -1,49 +1,23 @@
-import io
-import re
-import base64
-import requests
-import urllib.request
-from typing import Tuple
+from io import BytesIO
+from typing import Dict
 
-from nonebot.log import logger
+import httpx
+from nonebot import logger
+from nonebot.adapters.onebot.v11.event import MessageEvent
+from PIL import Image
 
 
-async def str2img(string: str) -> Tuple[io.BytesIO, str]:
+async def get_images(event: MessageEvent) -> Dict[int, Image.Image]:
     """
-    将传入的MessageSegment中的file的字符串转换流文件
+    获取event内所有的图片并以字典方式返回
     """
-    base64_pattern = r"base64://[a-zA-Z0-9+/]+"
-    other_pattern = r"(?:http|https)://\S+"
-    file_pattern = r"file:///\S+"
-    image_bytes = int(0).to_bytes()
-    name = None
-
-    if matcher := re.search(base64_pattern, string):
-
-        string = matcher.group()
-        string = string.replace("base64://", "")
-        name = string[:100] + "png"
-
-        if base64_miss_padding := (4 - len(string) % 4):
-            string += "=" * base64_miss_padding
-        image_bytes = base64.b64decode(string)
-
-    elif matcher := re.search(other_pattern, string) or (
-        matcher := re.search(file_pattern, string)
-    ):
-        string = matcher.group()
-        if name := re.search(r"/[^/]*\.(?:png|jpg|jpeg|gif|bmp)$", string):
-            name = name.group()
-        image_bytes = urllib.request.urlopen(string).read()
-
-    image = io.BytesIO(image_bytes)
-    name = name if name else "?.file"
-
-    return image, name
-
-
-async def luckycola_api(file: io.BytesIO) -> bool:
-
-    files = {"files": file}
-    response = requests.post(url="https://luckycola.com.cn/tools/checkImg", files=files)
-    return response.json()["data"]["isSafe"]
+    msg_images = event.message["image"]
+    images: dict[int, Image.Image] = {}
+    for idx, seg in enumerate(msg_images):
+        url = seg.data["url"]
+        r = httpx.get(url)
+        if r.status_code != 200:
+            logger.error(f"Cannot fetch image from {url} msg#{event.message_id}")
+            continue
+        images[idx] = Image.open(BytesIO(r.content))
+    return images

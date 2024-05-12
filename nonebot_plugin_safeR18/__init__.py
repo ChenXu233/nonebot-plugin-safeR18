@@ -1,19 +1,29 @@
-from nonebot import on_message
-from nonebot.matcher import Matcher
-from nonebot.typing import T_State
-from nonebot.adapters.onebot.v11 import Bot, MessageEvent
+import os
+from typing import Dict
+from PIL import Image
 
-from .functions import str2img, luckycola_api
+from nonebot import on_message, require
+from nonebot.params import Depends
+from nonebot.adapters.onebot.v11 import MessageEvent
+
+require("nonebot_plugin_nsfw")
+from nonebot_plugin_nsfw.deps import detect_nsfw
+
+from .functions import get_images
 from .config import plugin_config
 
 safeR18 = on_message(priority=plugin_config.safeR18_priority)
 
 
 @safeR18.handle()
-async def _saving_img(matcher: Matcher, event: MessageEvent, bot: Bot):
-    for i in event.message:
-        if i.type == "image":
-            image, name = await str2img(i.data["file"])
-            if await luckycola_api(image):
-                with open(plugin_config.safeR18_storage_path / name, "xb") as f:
-                    f.write(image.getvalue())
+async def _saving_img(
+    event: MessageEvent,
+    has_nsfw: bool = Depends(detect_nsfw),
+    images: Dict[int, Image.Image] = Depends(get_images),
+):
+    if not has_nsfw:
+        return
+    if not os.path.exists(plugin_config.safeR18_storage_path):
+        os.makedirs(plugin_config.safeR18_storage_path)
+    for index, i in images.items():
+        i.save(plugin_config.safeR18_storage_path / f"{event.message_id}-{index}.png")

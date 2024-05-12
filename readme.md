@@ -19,7 +19,7 @@
 
 ## 📖 介绍
 
-通过第三方api判断是不是色图然后保存到本地的插件
+通过[nonebot-plugin-nsfw](https://github.com/iyume/nonebot-plugin-nsfw)判断是不是色图然后保存到本地的插件
 
 ##### 🤔为啥叫safeR18？
 
@@ -46,7 +46,6 @@ plugins = ["nonebot_plugin_safeR18"]
 | 配置项 | 必填 | 默认值 |
 | :---: | :---: | :---: |
 | safeR18_priority | 否 | 10 |
-| safeR18_api | 否 | https://luckycola.com.cn/tools/checkImg |
 | safeR18_storage_path| 否 | Path("./storage")|
 
 ## 🎉 使用
@@ -55,12 +54,12 @@ plugins = ["nonebot_plugin_safeR18"]
 
 ## 📃TODO
 
-1. [ ] 多api支持
-2. [ ] 分组保存图片
+1. [ ] 分组保存图片
 
 当然这是一定会咕咕的。
 
 ## 🔥鸣谢
 
 - [`NoneBot`](https://nonebot.dev/)：本项目的根源
+- [nonebot-plugin-nsfw](https://github.com/iyume/nonebot-plugin-nsfw):本项目的依赖
 - LLOneBot群友：提出了这样一个点子

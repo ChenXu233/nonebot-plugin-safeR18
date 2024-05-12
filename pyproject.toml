@@ -10,8 +10,7 @@ readme = "README.md"
 python = "^3.12"
 nonebot2 = "^2.3.0"
 nonebot-adapter-onebot = "^2.4.3"
-requests = "^2.31.0"
-pillow = "^10.3.0"
+nonebot-plugin-nsfw = {extras = ["nsfw-model"], version = "^0.10"}
 
 
 [build-system]

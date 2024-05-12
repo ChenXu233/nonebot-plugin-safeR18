@@ -5,8 +5,7 @@ from pathlib import Path
 
 class Config(BaseModel):
     safeR18_priority: int = 10
-    safeR18_api: str = "https://luckycola.com.cn/tools/checkImg"
-    safeR18_storage_path: Path = Path("./storage")
+    safeR18_storage_path: Path = Path("./images")
 
     @field_validator("safeR18_priority")
     @classmethod
