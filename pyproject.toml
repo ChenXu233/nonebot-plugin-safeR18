@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "nonebot-plugin-safer18"
+version = "0.0.1"
+description = "一个通过鉴黄API来判断图片是否为R18并保存的Nonebot插件"
+authors = ["Chen_X <91937041+ChenXu233@users.noreply.github.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+nonebot2 = "^2.3.0"
+nonebot-adapter-onebot = "^2.4.3"
+requests = "^2.31.0"
+pillow = "^10.3.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
