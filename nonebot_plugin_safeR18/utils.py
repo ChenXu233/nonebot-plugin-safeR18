@@ -29,7 +29,7 @@ model.fc = nn.Sequential( # type: ignore
     nn.ReLU(),
     nn.Dropout(0.2),
     nn.Linear(512, 10),
-    nn.Softmax(dim=1),
+    nn.LogSoftmax(dim=1),
 )
 current_script_path = os.path.abspath(__file__)
 path = Path(current_script_path)
@@ -38,6 +38,7 @@ model_path = path.parent / "models/ResNet50_nsfw_model.pth"
 model.load_state_dict(
     torch.load(os.path.abspath(model_path), map_location=torch.device("cpu"))
 )
+model.eval()
 # TODO :异步优化图片获取
 
 
@@ -70,8 +71,11 @@ def R18_rate(img: Image.Image) -> Dict[str, float]:
         image_tensor.cuda()
     input = Variable(image_tensor)
     output = model(input)
-    index = list(output.data.numpy())
-    index = index[:5]
+    index = output.data.numpy()
+    print(index)
+    index = index[0][:5]
+    print(index)
+    print(output.data.numpy().argmax())
     return {CLASSES[i]: index[i] for i in range(5)}
 
 

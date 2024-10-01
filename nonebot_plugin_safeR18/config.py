@@ -1,12 +1,14 @@
-from nonebot import get_plugin_config
+from nonebot import get_plugin_config, get_driver
 from pydantic import BaseModel
 
 
-class SafeR18Config(BaseModel): ...
+class ScopedConfig(BaseModel):
+    save_path: str = "./data/safeR18"
 
 
 class Config(BaseModel):
-    safeR18: SafeR18Config
+    SafeR18: ScopedConfig = ScopedConfig()
 
 
-plugin_config = get_plugin_config(Config).safeR18
+global_config = get_driver().config
+plugin_config = get_plugin_config(Config).SafeR18

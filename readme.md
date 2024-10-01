@@ -27,14 +27,24 @@
 
 ## 💿 安装
 
+使用nb-cli
+
+```bash
+nb plugin install nonebot-plugin-safeR18
+```
+
+----
+
+或者你喜欢的话：
 ```bash
 pip install nonebot-plugin-safeR18
 # or, use poetry
 poetry add nonebot-plugin-safeR18
+# or, use pdm
+pdm add nonebot-plugin-safeR18
+
 ```
-
 打开 NoneBot 项目根目录下的配置文件, 在 `[plugin]` 部分追加写入
-
 ```toml
 plugins = ["nonebot_plugin_safeR18"]
 ```
@@ -45,8 +55,7 @@ plugins = ["nonebot_plugin_safeR18"]
 
 | 配置项 | 必填 | 默认值 |
 | :---: | :---: | :---: |
-| safeR18_priority | 否 | 10 |
-| safeR18_storage_path| 否 | Path("./storage")|
+没有！
 
 ## 🎉 使用
 
@@ -61,5 +70,4 @@ plugins = ["nonebot_plugin_safeR18"]
 ## 🔥鸣谢
 
 - [`NoneBot`](https://nonebot.dev/)：本项目的根源
-- [nonebot-plugin-nsfw](https://github.com/iyume/nonebot-plugin-nsfw):本项目的依赖
 - LLOneBot群友：提出了这样一个点子
