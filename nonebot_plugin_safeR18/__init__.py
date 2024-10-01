@@ -21,6 +21,7 @@ from .config import plugin_config, Config
 
 __plugin_meta__ = PluginMetadata(
     name="涩涩保存器",
+        homepage="https://github.com/ChenXu233/nonebot-plugin-safeR18",
     description="保存涩涩图片的插件",
     usage="插上就用",
     type="application",
