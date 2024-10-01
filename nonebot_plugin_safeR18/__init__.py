@@ -1,29 +1,46 @@
-import os
+import uuid
 from typing import Dict
 from PIL import Image
 
-from nonebot import on_message, require
+from nonebot import require
+from nonebot.log import logger
 from nonebot.params import Depends
-from nonebot.adapters.onebot.v11 import MessageEvent
+from nonebot.message import event_postprocessor
+from nonebot.adapters import Event
+from nonebot.plugin import PluginMetadata
 
-require("nonebot_plugin_nsfw")
-from nonebot_plugin_nsfw.deps import detect_nsfw
+require("nonebot_plugin_saa")
+require("nonebot_plugin_localstore")
+require("nonebot_plugin_uninfo")
+import nonebot_plugin_saa as saa
+from nonebot_plugin_localstore import get_data_dir
+from nonebot_plugin_uninfo import get_session, Session
 
-from .functions import get_images
-from .config import plugin_config
+from .utils import get_images, is_R18
+from .config import plugin_config, SafeR18Config
 
-safeR18 = on_message(priority=plugin_config.safeR18_priority)
+__plugin_meta__ = PluginMetadata(
+    name="涩涩保存器",
+    description="保存涩涩图片的插件",
+    usage="插上就用",
+    type="application",
+    config=SafeR18Config,
+    extra={},
+)
 
 
-@safeR18.handle()
-async def _saving_img(
-    event: MessageEvent,
-    has_nsfw: bool = Depends(detect_nsfw),
-    images: Dict[int, Image.Image] = Depends(get_images),
+@event_postprocessor
+async def save_images(
+    event: Event,
+    imgs: Dict[int, Image.Image] = Depends(get_images),
+    session: Session = Depends(get_session),
 ):
-    if not has_nsfw:
-        return
-    if not os.path.exists(plugin_config.safeR18_storage_path):
-        os.makedirs(plugin_config.safeR18_storage_path)
-    for index, i in images.items():
-        i.save(plugin_config.safeR18_storage_path / f"{event.message_id}-{index}.png")
+    dir = get_data_dir("Nonebot-plugin-safeR18")
+    for i in imgs.items():
+        if is_R18(i[1]):
+            name = session.user.id
+            img_id = uuid.uuid5(uuid.NAMESPACE_DNS, name)
+            img_name = f"{img_id}.jpg"
+            save_dir = dir / img_name
+            i[1].save(save_dir)
+            logger.info(f"发现色图！已保存到{save_dir}")

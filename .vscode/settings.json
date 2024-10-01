@@ -1,6 +1,14 @@
 {
     "cmake.configureOnOpen": false,
     "cSpell.words": [
-        "luckycola"
+        "hentai",
+        "httpx",
+        "localstore",
+        "luckycola",
+        "postprocessor",
+        "Softmax",
+        "torchvision",
+        "uninfo",
+        "unsqueeze"
     ]
 }
