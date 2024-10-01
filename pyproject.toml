@@ -4,7 +4,6 @@ version = "0.1.0"
 description = "一个通过鉴黄API来判断图片是否为R18并保存的Nonebot插件"
 authors = ["Chen_X <91937041+ChenXu233@users.noreply.github.com>"]
 license = "MIT"
-readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
