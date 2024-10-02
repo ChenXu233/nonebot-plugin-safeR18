@@ -19,7 +19,7 @@
 
 ## 📖 介绍
 
-通过[nonebot-plugin-nsfw](https://github.com/iyume/nonebot-plugin-nsfw)判断是不是色图然后保存到本地的插件
+通过torch的nsfw模型判断是不是色图然后保存到本地的插件
 
 ##### 🤔为啥叫safeR18？
 
