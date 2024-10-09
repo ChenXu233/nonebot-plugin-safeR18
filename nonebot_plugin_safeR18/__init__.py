@@ -7,13 +7,13 @@ from nonebot.log import logger
 from nonebot.params import Depends
 from nonebot.message import event_postprocessor
 from nonebot.adapters import Event
-from nonebot.plugin import PluginMetadata
+from nonebot.plugin import PluginMetadata, inherit_supported_adapters
 
 require("nonebot_plugin_saa")
 require("nonebot_plugin_localstore")
 require("nonebot_plugin_uninfo")
 import nonebot_plugin_saa as saa
-from nonebot_plugin_localstore import get_data_dir
+from nonebot_plugin_localstore import get_plugin_data_dir
 from nonebot_plugin_uninfo import get_session, Session
 
 from .utils import get_images, is_R18
@@ -25,6 +25,9 @@ __plugin_meta__ = PluginMetadata(
     description="保存涩涩图片的插件",
     usage="插上就用",
     type="application",
+    supported_adapters=inherit_supported_adapters(
+        "nonebot_plugin_saa"
+    ),
     config=Config,
     extra={},
 )
@@ -39,7 +42,7 @@ async def save_images(
     if not imgs:
         return
 
-    dir = get_data_dir("Nonebot-plugin-safeR18")
+    dir = get_plugin_data_dir()
     for i in imgs.items():
         if is_R18(i[1]):
             name = session.user.id

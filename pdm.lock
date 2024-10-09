@@ -5,10 +5,10 @@
 groups = ["default"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:9d06a9f6b3fdf37a95fbc567f9f8f7028c59041857179e249e8ce2d9c0611ee1"
+content_hash = "sha256:bc8e99d971e7a7b810cf8fae742d9e2100c825aba3bb2c9e844afc268ff97dd7"
 
 [[metadata.targets]]
-requires_python = "~=3.10"
+requires_python = ">=3.10,<3.13"
 
 [[package]]
 name = "alembic"
@@ -1318,15 +1318,6 @@ groups = ["default"]
 files = [
     {file = "typing_extensions-4.12.2-py3-none-any.whl", hash = "sha256:04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d"},
     {file = "typing_extensions-4.12.2.tar.gz", hash = "sha256:1a7ead55c7e559dd4dee8856e3a88b41225abfe1ce8df57b7c13915fe121ffb8"},
-]
-
-[[package]]
-name = "uuid"
-version = "1.30"
-summary = "UUID object and generation functions"
-groups = ["default"]
-files = [
-    {file = "uuid-1.30.tar.gz", hash = "sha256:1f87cc004ac5120466f36c5beae48b4c48cc411968eed0eaecd3da82aa96193f"},
 ]
 
 [[package]]

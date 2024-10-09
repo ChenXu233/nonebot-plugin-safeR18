@@ -36,7 +36,7 @@ path = Path(current_script_path)
 model_path = path.parent / "models/ResNet50_nsfw_model.pth"
 
 model.load_state_dict(
-    torch.load(os.path.abspath(model_path), map_location=torch.device("cpu"))
+    torch.load(os.path.abspath(model_path), map_location=torch.device("cpu"),weights_only=True)
 )
 model.eval()
 # TODO :异步优化图片获取
@@ -65,17 +65,18 @@ def R18_rate(img: Image.Image) -> Dict[str, float]:
     """
     获取图片R18评分
     """
-    image_tensor = test_transforms(img).float()  # type: ignore
-    image_tensor = image_tensor.unsqueeze_(0)
-    if torch.cuda.is_available():
-        image_tensor.cuda()
-    input = Variable(image_tensor)
-    output = model(input)
-    index = output.data.numpy()
-    print(index)
-    index = index[0][:5]
-    print(index)
-    print(output.data.numpy().argmax())
+    with torch.inference_mode():
+        image_tensor = test_transforms(img).float()  # type: ignore
+        image_tensor = image_tensor.unsqueeze_(0)
+        if torch.cuda.is_available():
+            image_tensor.cuda()
+        input = Variable(image_tensor)
+        output = model(input)
+        index = output.data.numpy()
+        logger.debug(index)
+        index = index[0][:5]
+        logger.debug(index)
+        logger.debug(output.data.numpy().argmax())
     return {CLASSES[i]: index[i] for i in range(5)}
 
 
