@@ -1,10 +1,10 @@
+from typing import Optional
 from nonebot import get_plugin_config, get_driver
 from pydantic import BaseModel
 
 
 class ScopedConfig(BaseModel):
-    save_path: str = "./data/safeR18"
-
+    save_path: Optional[str] = None
 
 class Config(BaseModel):
     safer18: ScopedConfig = ScopedConfig()
