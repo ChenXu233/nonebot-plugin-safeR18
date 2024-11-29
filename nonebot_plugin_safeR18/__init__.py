@@ -1,4 +1,6 @@
 import uuid
+from datetime import datetime
+from pathlib import Path
 from typing import Dict
 from PIL import Image
 
@@ -41,11 +43,13 @@ async def save_images(
 ):  
     if not imgs:
         return
-
-    dir = get_plugin_data_dir()
+    if not plugin_config.save_path:
+        dir = get_plugin_data_dir()
+    else:
+        dir = Path(plugin_config.save_path)
     for i in imgs.items():
         if is_R18(i[1]):
-            name = session.user.id
+            name = session.user.id + str(datetime.now().timestamp())
             img_id = uuid.uuid5(uuid.NAMESPACE_DNS, name)
             img_name = f"{img_id}.jpg"
             save_dir = dir / img_name
