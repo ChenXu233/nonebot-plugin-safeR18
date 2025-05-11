@@ -12,29 +12,26 @@ nonebot2 = "^2.3.0"
 torch = "^2.4.1"
 
 
-
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
-[tool.pdm.build]
-backend = "setuptools"
-
 
 [project]
 authors = [
-    {name = "ChenXu233", email = "91937041+ChenXu233@users.noreply.github.com"},
+    { name = "ChenXu233", email = "91937041+ChenXu233@users.noreply.github.com" },
 ]
-license = {text = "MIT"}
+license = { text = "MIT" }
 requires-python = "<3.13,>=3.10"
 dependencies = [
     "nonebot2>=2.3.3",
     "Torch>=2.4.1",
-    "nonebot-plugin-cesaa>=0.4.1",
     "pillow>=10.4.0",
-    "httpx>=0.27.2",
+    "httpx>=0.28.1",
     "torchvision>=0.19.1",
     "nonebot-plugin-uninfo>=0.3.0",
+    "nonebot-plugin-alconna>=0.54.0",
+    "ultralytics>=8.3.130",
 ]
 name = "nonebot-plugin-safer18"
 version = "0.1.2"
