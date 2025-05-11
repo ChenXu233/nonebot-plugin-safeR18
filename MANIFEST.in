@@ -1,1 +1,2 @@
 include nonebot_plugin_safeR18/models/ResNet50_nsfw_model.pth
+include nonebot_plugin_safeR18/models/yolo11x-cls_nsfw.pt

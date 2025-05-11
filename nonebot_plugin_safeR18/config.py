@@ -6,7 +6,7 @@ from pydantic import BaseModel
 
 class ScopedConfig(BaseModel):
     save_path: Optional[str] = None
-    model: Literal["yolo-V11-1.0", "resnet-50"] = "yolo-V11-1.0"
+    model: Literal["yolo-V11", "resnet-50"] = "yolo-V11"
 
 
 class Config(BaseModel):

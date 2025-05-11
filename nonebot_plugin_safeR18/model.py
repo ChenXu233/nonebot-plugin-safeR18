@@ -1,20 +1,18 @@
 import abc
 import os
-from PIL import Image
-
 from pathlib import Path
-from torchvision import transforms, models
+
 import torch
+from nonebot import logger
+from PIL import Image
 from torch import nn
 from torch.autograd import Variable
-
-from nonebot import logger
-from .config import plugin_config
+from torchvision import models, transforms
+from ultralytics import YOLO
 
 
 class BaseModel(abc.ABC):
     def __init__(self):
-        self.model = None
         self.classes = ["drawings", "hentai", "neutral", "porn", "sexy"]
 
     @abc.abstractmethod
@@ -33,7 +31,7 @@ class BaseModel(abc.ABC):
 
 class RestNet50Model(BaseModel):
     def __init__(self):
-        test_transforms = transforms.Compose(
+        self.test_transforms = transforms.Compose(
             [
                 transforms.Resize(224),
                 transforms.CenterCrop(224),
@@ -82,5 +80,19 @@ class RestNet50Model(BaseModel):
 
 class YOLOV11Model(BaseModel):
     def __init__(self):
-        self.model = None
-        self.threshold = 0.5
+        self.model = YOLO(str(Path(__file__).parent / "models/yolo11x-cls_nsfw.pt"))
+
+    def predict(self, image: Image.Image) -> dict:
+        result = self.model.predict(
+            source=image,
+            conf=0.5,
+            iou=0.5,
+            classes=[0, 1, 2, 3, 4],
+            agnostic_nms=True,
+            max_det=1,
+        )
+        probs = result[0].probs
+        if not probs:
+            raise ValueError("No predictions made by the model.")
+        index = probs.data.tolist()
+        return {self.classes[i]: index[i] for i in range(5)}

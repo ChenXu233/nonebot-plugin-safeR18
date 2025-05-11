@@ -18,8 +18,8 @@ from nonebot_plugin_localstore import get_plugin_data_dir
 from nonebot_plugin_uninfo import Session, get_session
 
 from .config import Config, plugin_config
+from .model import BaseModel, RestNet50Model, YOLOV11Model
 from .utils import get_images
-from .model import RestNet50Model
 
 __plugin_meta__ = PluginMetadata(
     name="涩涩保存器",
@@ -32,7 +32,12 @@ __plugin_meta__ = PluginMetadata(
     extra={},
 )
 
-Model = RestNet50Model()
+Model: BaseModel
+
+if plugin_config.model == "yolo-V11":
+    Model = YOLOV11Model()
+elif plugin_config.model == "resnet-50":
+    Model = RestNet50Model()
 
 
 @event_postprocessor

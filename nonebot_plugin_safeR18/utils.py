@@ -8,8 +8,6 @@ from nonebot.adapters import Bot, Event
 from nonebot_plugin_alconna.uniseg import Image, Reference, UniMsg
 from PIL import Image as Img
 
-from .config import plugin_config
-
 HTTPX_CLIENT = None
 
 ssl_context = ssl.create_default_context()
