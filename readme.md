@@ -30,7 +30,7 @@
 使用nb-cli
 
 ```bash
-nb plugin install nonebot-plugin-safeR18
+nb plugin install nonebot_plugin_safeR18
 ```
 
 ----
