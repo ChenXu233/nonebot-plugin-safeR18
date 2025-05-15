@@ -1,22 +1,3 @@
-[tool.poetry]
-name = "nonebot-plugin-safer18"
-version = "0.3.0"
-description = "一个通过鉴黄API来判断图片是否为R18并保存的Nonebot插件"
-authors = ["Chen_X <91937041+ChenXu233@users.noreply.github.com>"]
-license = "MIT"
-readme = "README.md"
-
-[tool.poetry.dependencies]
-python = "^3.12"
-nonebot2 = "^2.3.0"
-torch = "^2.4.1"
-
-
-[build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
-
-
 [project]
 authors = [
     { name = "ChenXu233", email = "91937041+ChenXu233@users.noreply.github.com" },
@@ -34,9 +15,27 @@ dependencies = [
     "ultralytics>=8.3.130",
 ]
 name = "nonebot-plugin-safer18"
-version = "0.1.2"
+version = "0.3.0"
 description = "一个通过鉴黄API来判断图片是否为R18并保存的Nonebot插件"
 readme = "README.md"
+
+[tool.poetry]
+name = "nonebot-plugin-safer18"
+version = "0.3.0"
+description = "一个通过鉴黄API来判断图片是否为R18并保存的Nonebot插件"
+authors = ["Chen_X <91937041+ChenXu233@users.noreply.github.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+nonebot2 = "^2.3.0"
+torch = "^2.4.1"
+
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
 
 [tool.ruff.lint]
 ignore = ["E402"]
