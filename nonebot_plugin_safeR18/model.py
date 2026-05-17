@@ -31,6 +31,7 @@ class BaseModel(abc.ABC):
 
 class RestNet50Model(BaseModel):
     def __init__(self):
+        super().__init__()
         self.test_transforms = transforms.Compose(
             [
                 transforms.Resize(224),
@@ -80,6 +81,7 @@ class RestNet50Model(BaseModel):
 
 class YOLOV11Model(BaseModel):
     def __init__(self):
+        super().__init__()
         self.model = YOLO(str(Path(__file__).parent / "models/yolo11x-cls_nsfw.pt"))
 
     def predict(self, image: Image.Image) -> dict:
